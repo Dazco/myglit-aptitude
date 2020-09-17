@@ -13,8 +13,8 @@
         @foreach($categories as $category)
             <div class="col-sm-4">
                 <h3 class="mb-5 text-danger text-sm-left text-center">{{ucfirst($category)}} Questions</h3>
-                @if(count($questions[$category]))
-                    <ul class="pl-sm-0 pl-5" id="{{$category}}-questions" style="list-style-type: decimal-leading-zero">
+                <ul class="pl-sm-0 pl-5" id="{{$category}}-questions" style="list-style-type: decimal-leading-zero">
+                    @if(count($questions[$category]))
                         @foreach($questions[$category] as $question)
                             <li class="question mb-4">
                                 <p class="description w-75">{{$question->description}}</p>
@@ -62,10 +62,10 @@
                                 </ul>
                             </li>
                         @endforeach
-                    </ul>
-                @else
-                    <p>No questions in this category</p>
-                @endif
+                    @else
+                        <li>No questions in this category</li>
+                    @endif
+                </ul>
             </div>
         @endforeach
     </div>
@@ -198,6 +198,7 @@
                             </li>
                             `;
                     document.querySelector(`#${category}-questions`).innerHTML += question_html;
+                    $('#add-question-modal').modal('hide');
                 })
                 .catch(err => {
                     console.log(err.message)
@@ -206,7 +207,6 @@
                 })
                 .finally(() => {
                     btn.removeAttribute('disabled');
-                    $('#add-question-modal').modal('hide');
                 })
         }
 
